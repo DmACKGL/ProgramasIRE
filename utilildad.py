@@ -1,3 +1,4 @@
+import pxssh
 import urllib 
 import re 
 while True:
@@ -34,7 +35,7 @@ while True:
                               while True:
                                         print ("""
                                         1. IP Externa
-                                        2. Salir
+                                        2. SSH
                                         """)
                                         True= raw_input("Que Necesitas? = ")
                                         if True == "1":
@@ -45,7 +46,14 @@ while True:
                                             IPResul = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}.\d{1,3}", request)
                                             print "La IP de esta maquina es: ", IPResul
                                         elif True == "2":
-                                                           break
+                                              s = pxssh.pxssh()
+					      if not s.login ('localhost', 'root', '13251325CD'):
+						    print "ERROR al conectar con gastly."
+						    print str(s)
+					      else:
+						    print "Conectado..."
+						    s.sendline ('htop')
+						    s.prompt()         
            elif True == "3":
                                 break
                                                         
