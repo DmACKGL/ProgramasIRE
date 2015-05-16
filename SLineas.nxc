@@ -1,0 +1,53 @@
+//Blanco 50<--
+//Negro  60-->
+//Inicio Programa
+task main (){
+    //seteamos Sensores
+    SetSensorLowspeed(IN_2); //sensor de Ultra Sonido Puerto 2
+    SetSensorTouch(IN_1); //sensor de Tacto Puerto 1
+    SetSensorLight(IN_3); //sensor de Luz Puerto 3
+
+    //While and if comienzo programa
+    While(1){ //Loop infinito Verificar Sensores 1
+     if(SENSOR_1==1){ //Inicio Programa con Tacto Parte superior
+      While(1){ //Loop infinito Verificar Sensores 2
+       //Detecto obstaculo
+       if(SensorUS>=24){
+        //Giro
+        OnRev(OUT_B,75);
+        OnFwd(OUT_C,75);
+        Wait(750);
+        Off(OUT_ABC);
+        //Giro Amplio
+        OnFwd(OUT_C,45);
+        OnFwd(OUT_B,75);
+        Wait(1260);
+        //Continua Seguidor Linea
+        While(1){
+         //Detecto Blanco
+         if(SENSOR_3>40){
+         OnFwd(OUT_B,75);
+         OnFwd(OUT_C,75);
+         } //Fin Blanco
+         //Detecto Negro
+         if(SENSOR_3<60){
+         OnFwd(OUT_C,75);
+         OnFwd(OUT_B,76);
+         } //Fin Negro
+        }  //Fin IF Obstaculo
+       } //Fin While (1) seguidor 2
+
+      // Si no detecta nada seguir linea
+      //Detecto Blanco
+      if(SENSOR_3>40){
+      OnFwd(OUT_B,75);
+      OnFwd(OUT_C,75);
+      } //Fin Blanco
+      //Detecto Negro
+      if(SENSOR_3<60){
+      OnFwd(OUT_C,75);
+      OnFwd(OUT_B,76);
+      } //Fin Negro
+     } //Fin While(1) Primer sensor
+    } //Fin While (1) Tacto
+} //fin task main
